@@ -1,4 +1,4 @@
-package com.mycompany.json_validator;
+package pack;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -8,12 +8,12 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import java.io.IOException;
 import java.net.URI;
 
-public class Main {
+public class main {
 
     public static final String BASE_URI = "http://0.0.0.0:8080";
 
     public static HttpServer startServer() {
-        ResourceConfig rc = new ResourceConfig().packages("com.mycompany.json_validator");
+        ResourceConfig rc = new ResourceConfig().packages("pack");
         rc.register(MultiPartFeature.class);
         rc.register(Resource.class);
 
@@ -22,7 +22,5 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         startServer();
-        System.out.println(String.format("Server available at "
-                + "%s\n", BASE_URI));
     }
 }

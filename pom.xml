@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.mycompany</groupId>
-    <artifactId>json_validator</artifactId>
+    <groupId>masha.masha</groupId>
+    <artifactId>validationservice</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
+
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -16,7 +18,8 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
+
+
      <dependencies>
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
@@ -26,7 +29,7 @@
          <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-moxy</artifactId>
-        </dependency>
+         </dependency>
         
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -39,34 +42,35 @@
              <artifactId>jersey-media-multipart</artifactId>
             </dependency>
     </dependencies>
-    
-<build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>com.mycompany.json_validator.Main</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <configuration>
-                    <mainClass>com.mycompany.json_validator.Main</mainClass>
-                </configuration>
-            </plugin>
-        </plugins>
-</build>
 
-    
+
+    <build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>2.4</version>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <addClasspath>true</addClasspath>
+                        <mainClass>pack.main</mainClass>
+                    </manifest>
+                </archive>
+            </configuration>
+        </plugin>
+
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.2.1</version>
+            <configuration>
+                <mainClass>pack.main</mainClass>
+            </configuration>
+        </plugin>
+        </plugins>
+    </build>
+
 
     <properties>
         <jersey.version>2.17</jersey.version>

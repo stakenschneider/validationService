@@ -30,6 +30,12 @@ public class Resource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
 
+    /*
+     * function accepting json files
+     * @param stream 
+     * @param fileDetail data content disposition
+     */
+    
     public Response checkFile(@FormDataParam("file") InputStream stream,
                               @FormDataParam("file") FormDataContentDisposition fileDetail) throws Exception {
 
@@ -37,16 +43,15 @@ public class Resource {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Map<String, String> result;
 
-//        try {
-//            result = gson.fromJson(json, new TypeToken<Map<String, String>>() {
-//            }.getType());
-//        } catch (JsonSyntaxException e) {
-//            return Response.status(200).entity(gson.toJson(makeError(e, fileDetail))).build();
-//        }
-
         return Response.status(200).entity(gson.toJson(json)).build();
     }
 
+    
+/*
+ * catching error function
+ * @param e malformed JSON element
+ * @param fileDetail data content disposition
+ */
     private Map<String, String> makeError(JsonSyntaxException e, FormDataContentDisposition fileDetail) {
         String messageDetail = e.getCause().getMessage();
         Map<String, String> error = new HashMap<>();

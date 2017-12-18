@@ -8,6 +8,11 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import java.io.IOException;
 import java.net.URI;
 
+/*
+ * JSON Validation Service
+ * @author masha
+ */
+
 public class main {
 
     public static final String BASE_URI = "http://0.0.0.0:8080";

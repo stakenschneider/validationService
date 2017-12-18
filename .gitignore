@@ -1,0 +1,7 @@
+target/
+test/
+resources/
+
+*.xml
+*.png
+*.class

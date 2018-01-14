@@ -5,7 +5,6 @@ import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
-import java.io.IOException;
 import java.net.URI;
 
 /*
@@ -15,7 +14,7 @@ import java.net.URI;
 
 public class main {
 
-    public static final String BASE_URI = "http://0.0.0.0:8080";
+    public static final String BASE_URI = "http://0.0.0.0:1080";
 
     public static HttpServer startServer() {
         ResourceConfig rc = new ResourceConfig().packages("pack");
@@ -25,7 +24,7 @@ public class main {
         return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         startServer();
     }
 }

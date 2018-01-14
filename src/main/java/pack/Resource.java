@@ -1,64 +1,65 @@
 package pack;
 
-import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
-
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.MediaType;
 
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.Map;
-import java.util.HashMap;
-
-import org.glassfish.jersey.media.multipart.FormDataParam;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
-import java.util.stream.Collectors;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Path("")
 public class Resource {
+    @PUT
+    @Path("/{file}")
 
-    @POST
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.APPLICATION_JSON)
-
-    /*
+    /**
      * function accepting json files
-     * @param stream 
+     * @param stream
      * @param fileDetail data content disposition
      */
-    
-    public Response checkFile(@FormDataParam("file") InputStream stream,
-                              @FormDataParam("file") FormDataContentDisposition fileDetail) throws Exception {
+    public String checkFile(@PathParam("file") String file, InputStream stream) {
 
-        final String json = new BufferedReader(new InputStreamReader(stream)).lines().collect(Collectors.joining());
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Map<String, String> result;
+        final String jsonString = new BufferedReader(new InputStreamReader(stream)).lines().collect(Collectors.joining());
 
-        return Response.status(200).entity(gson.toJson(json)).build();
+        JSONParser parser = new JSONParser();
+        try {
+            parser.parse(jsonString);
+        } catch (ParseException  ex) {
+            return makeError(ex.getErrorType(), ex.toString(), ex.getPosition(), file);
+        }
+        return jsonString;
+
+//        JSONObject result = new JSONObject();
+//        try {
+//            result = (JSONObject) parser.parse(jsonString);
+//        } catch (ParseException ex) {
+//            try {
+//                return Response.status(200).entity(parser.parse(makeError(ex.getErrorType(), ex.toString(), ex.getPosition(), file))).build();
+//            }
+//            catch (ParseException e){}
+//        }
+//        return Response.status(200).entity(result).build();
     }
 
-    
-/*
- * catching error function
- * @param e malformed JSON element
- * @param fileDetail data content disposition
- */
-    private Map<String, String> makeError(JsonSyntaxException e, FormDataContentDisposition fileDetail) {
-        String messageDetail = e.getCause().getMessage();
-        Map<String, String> error = new HashMap<>();
-        String[] arrayMessage = messageDetail.split("at", 2);
-        error.put("resource", fileDetail.getFileName());
-        error.put("errorPlace", arrayMessage[1]);
-        error.put("errorMessage", arrayMessage[0]);
-        return error;
+
+    private  String makeError(int errorCode, String errorMessage, int errorPlace, String fileName) {
+        JSONObject jsonObject = new JSONObject();
+//        Map<String, String> jsonObject = new HashMap<>();
+        jsonObject.put("errorCode", Integer.toString(errorCode));
+        jsonObject.put("errorMessage", errorMessage);
+        jsonObject.put("errorPlace", Integer.toString(errorPlace));
+        jsonObject.put("resource", fileName);
+
+        return jsonObject.toJSONString();
     }
 }

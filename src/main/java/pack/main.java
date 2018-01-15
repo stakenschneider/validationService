@@ -7,7 +7,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 import java.net.URI;
 
-/*
+/**
  * JSON Validation Service
  * @author masha
  */

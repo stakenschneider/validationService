@@ -7,7 +7,7 @@ run: `sudo docker run --rm -d -p 80:80 stakenschneider/validationservice`
 
 start: `curl --upload-file filename.json http://localhost:80`
 
-##Errors
+## Errors
 Error format have structure like
 
 {

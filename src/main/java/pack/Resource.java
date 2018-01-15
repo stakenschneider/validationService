@@ -18,32 +18,39 @@ public class Resource {
      * function accepting json files
      * @param file
      * @param stream
+     * @return Response
      */
     public Response checkFile(@PathParam("file") String file, InputStream stream) {
 
         final String jsonString = new BufferedReader(new InputStreamReader(stream)).lines().collect(Collectors.joining());
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Object result;
-        int request_id = 0;
         try {
             result = gson.fromJson(jsonString, Object.class);
         } catch (JsonSyntaxException e) {
             String[] str = e.getCause().getMessage().split(".+: | at ");
-            return Response.status(200).entity(gson.toJson(makeError(str[0], str[1], file, request_id, e.hashCode()))).build();
-        } finally {
-        request_id++;
+            return Response.status(200).entity(gson.toJson(makeError(str[0], str[1], file, e.hashCode()))).build();
         }
         return Response.status(200).entity(gson.toJson(result)).build();
     }
 
 
-    private Map<String, String> makeError(String errorMessage, String errorPlace, String fileName, int requestID, int hashCode) {
+    /**
+     * function makes error
+     * @param errorMessage verbose, plain language description of the problem with hints about how to fix it
+     * @param errorPlace highlight the point where error has occurred
+     * @param fileName filename
+     * @param hashCode error code
+     * @return Map<String, String>
+     */
+    private Map<String, String> makeError(String errorMessage, String errorPlace, String fileName, int hashCode) {
         Map<String, String> map = new HashMap<>();
         map.put("errorMessage", errorMessage);
         map.put("errorPlace", errorPlace);
         map.put("resource", fileName);
-        map.put("requestID", String.valueOf(requestID));
+        map.put("requestID", "12345");
         map.put("errorCode", String.valueOf(hashCode));
         return map;
     }
 }
+

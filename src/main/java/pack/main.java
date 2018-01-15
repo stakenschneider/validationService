@@ -7,24 +7,33 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 import java.net.URI;
 
-/*
+/**
  * JSON Validation Service
  * @author masha
  */
 
 public class main {
 
-    public static final String BASE_URI = "http://0.0.0.0:80";
+    public static final String BASE_URI = "http://0.0.0.0:1080";
 
+    /**
+     * сreates resource config
+     * @return HttpServer
+     *
+     */
     public static HttpServer startServer() {
         ResourceConfig rc = new ResourceConfig().packages("pack");
         rc.register(MultiPartFeature.class);
         rc.register(Resource.class);
-
         return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
     }
 
+    /**
+     * main
+     * @param args
+     *
+     */
     public static void main(String[] args) {
-        startServer();
+        HttpServer h = startServer();
     }
 }

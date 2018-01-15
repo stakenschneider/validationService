@@ -28,6 +28,11 @@ docker {
 }
 
 jar {
+    manifest {
+        attributes 'Main-Class': 'com.mycompany.json_validator.Main'
+    }
+
+
     baseName = 'validationservice-boot-docker'
     version =  '0'
     archiveName = 'validationservice-boot-docker-0.jar'

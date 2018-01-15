@@ -1,0 +1,15 @@
+pipeline {
+    agent any 
+    stages {
+        stage('Step 1') {
+            steps {
+                echo 'Step 1 executed, Volkova M.D.'
+            }
+        }
+        stage('Step 2') {
+            steps {
+                echo 'Step 2 executed, Volkova M.D.'
+            }
+        }
+    }
+}

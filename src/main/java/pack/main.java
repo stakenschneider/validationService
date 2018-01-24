@@ -16,15 +16,24 @@ public class main {
 
     public static final String BASE_URI = "http://0.0.0.0:1080";
 
+    /**
+     * сreates resource config
+     * @return HttpServer
+     *
+     */
     public static HttpServer startServer() {
         ResourceConfig rc = new ResourceConfig().packages("pack");
         rc.register(MultiPartFeature.class);
         rc.register(Resource.class);
-
         return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
     }
 
-    public static void main(String[] args) {
-        startServer();
+    /**
+     * main
+     * @param args
+     *
+     */
+    public static void main(String[] args){
+    startServer();
     }
 }

@@ -1,9 +1,11 @@
 target/
 test/
 resources/
+build/
 
 *.idea
 *.xml
 *.png
 *.class
 *.iml
+*.DS_Store

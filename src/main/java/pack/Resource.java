@@ -11,9 +11,10 @@ import java.util.stream.Collectors;
 
 @Path("")
 public class Resource {
+    private int global = 0;
+
     @PUT
     @Path("/{file}")
-
     /**
      * function accepting json files
      * @param file
@@ -21,7 +22,7 @@ public class Resource {
      * @return Response
      */
     public Response checkFile(@PathParam("file") String file, InputStream stream) {
-
+        global = global++ ;
         final String jsonString = new BufferedReader(new InputStreamReader(stream)).lines().collect(Collectors.joining());
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Object result;
@@ -30,6 +31,8 @@ public class Resource {
         } catch (JsonSyntaxException e) {
             String[] str = e.getCause().getMessage().split(".+: | at ");
             return Response.status(200).entity(gson.toJson(makeError(str[0], str[1], file, e.hashCode()))).build();
+            return Response.status(200).entity(gson.toJson(makeError(str[0], str[1], file, global, e.hashCode()))).build();
+            global++;
         }
         return Response.status(200).entity(gson.toJson(result)).build();
     }
@@ -40,17 +43,17 @@ public class Resource {
      * @param errorMessage verbose, plain language description of the problem with hints about how to fix it
      * @param errorPlace highlight the point where error has occurred
      * @param fileName filename
+     * @param requestID filename
      * @param hashCode error code
      * @return Map<String, String>
      */
-    private Map<String, String> makeError(String errorMessage, String errorPlace, String fileName, int hashCode) {
+    private Map<String, String> makeError(String errorMessage, String errorPlace, String fileName, int requestID, int hashCode) {
         Map<String, String> map = new HashMap<>();
         map.put("errorMessage", errorMessage);
         map.put("errorPlace", errorPlace);
         map.put("resource", fileName);
-        map.put("requestID", "12345");
+        map.put("requestID", String.valueOf(requestID));
         map.put("errorCode", String.valueOf(hashCode));
         return map;
     }
 }
-

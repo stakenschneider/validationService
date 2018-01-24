@@ -30,8 +30,8 @@ public class Resource {
             result = gson.fromJson(jsonString, Object.class);
         } catch (JsonSyntaxException e) {
             String[] str = e.getCause().getMessage().split(".+: | at ");
-            return Response.status(200).entity(gson.toJson(makeError(str[0], str[1], file, e.hashCode()))).build();
             return Response.status(200).entity(gson.toJson(makeError(str[0], str[1], file, global, e.hashCode()))).build();
+        } finally {
             global++;
         }
         return Response.status(200).entity(gson.toJson(result)).build();

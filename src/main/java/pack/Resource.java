@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Path("")
 public class Resource {
-    private int global = 0;
+
 
     @PUT
     @Path("/{file}")
@@ -22,15 +22,19 @@ public class Resource {
      * @return Response
      */
     public Response checkFile(@PathParam("file") String file, InputStream stream) {
-        global = global++ ;
+
         final String jsonString = new BufferedReader(new InputStreamReader(stream)).lines().collect(Collectors.joining());
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Object result;
+        int requestID;
+        Date date = new Date();
+        requestID =jsonString.hashCode() + date.toString().hashCode();
+        
         try {
             result = gson.fromJson(jsonString, Object.class);
         } catch (JsonSyntaxException e) {
             String[] str = e.getCause().getMessage().split(".+: | at ");
-            return Response.status(200).entity(gson.toJson(makeError(str[0], str[1], file, global, e.hashCode()))).build();
+            return Response.status(200).entity(gson.toJson(makeError(str[0], str[1], file, requestID, e.hashCode()))).build();
         } finally {
             global++;
         }

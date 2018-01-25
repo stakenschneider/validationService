@@ -14,7 +14,7 @@ import java.net.URI;
 
 public class main {
 
-    public static final String BASE_URI = "http://0.0.0.0:1080";
+    public static final String BASE_URI = "http://0.0.0.0:80";
 
     /**
      * сreates resource config

@@ -17,7 +17,7 @@ Error format have structure like
 
 ```
 {
-    "errorCode"  : ["json syntax exception hach code"],
+    "errorCode"  : ["json syntax exception hash code"],
     "errorMessage" : ["verbose, plain language description of the problem with hints about how to fix it]",
     "errorPlace" : ["highlight the point where error has occurred"],
     "resource"   : ["filename"],

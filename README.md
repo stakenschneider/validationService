@@ -4,7 +4,7 @@ U can/can't receive formatted json or error message.
 ## To deploy:
 Build gradle package and run Docker image:
 
-`./gradlew build docker`
+`./gradlew build dockerImage`
 
 run: `sudo docker run --rm -d -p 80:80 validationService` 4 gradle
 

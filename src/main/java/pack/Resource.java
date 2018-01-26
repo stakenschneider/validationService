@@ -26,17 +26,16 @@ public class Resource {
         final String jsonString = new BufferedReader(new InputStreamReader(stream)).lines().collect(Collectors.joining());
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Object result;
+
         int requestID;
         Date date = new Date();
         requestID =jsonString.hashCode() + date.toString().hashCode();
-        
+
         try {
             result = gson.fromJson(jsonString, Object.class);
         } catch (JsonSyntaxException e) {
             String[] str = e.getCause().getMessage().split(".+: | at ");
             return Response.status(200).entity(gson.toJson(makeError(str[0], str[1], file, requestID, e.hashCode()))).build();
-        } finally {
-            global++;
         }
         return Response.status(200).entity(gson.toJson(result)).build();
     }

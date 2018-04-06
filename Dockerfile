@@ -1,4 +1,3 @@
-
 FROM openjdk:alpine
 EXPOSE 80
 ADD . /

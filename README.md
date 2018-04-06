@@ -6,7 +6,7 @@ Build gradle package and run Docker image:
 
 `./gradlew build dockerImage`
 
-run: `sudo docker run --rm -d -p 80:80 validationService` 4 gradle
+run: `sudo docker run --rm -d -p 80:80 json_validator` 4 gradle
 
 run: `sudo docker run --rm -d -p 80:80 stakenschneider/validationservice`
 
